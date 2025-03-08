@@ -1,0 +1,15 @@
+[project]
+name = "prime-problem-89"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pandas>=2.2.3",
+    "sympy>=1.13.3",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+]
