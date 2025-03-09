@@ -1,4 +1,6 @@
 src/n_2_plus_k/used_numbers.py
+src/n_2_plus_k/failed_methods.py
+effect.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
