@@ -3,11 +3,10 @@ import sympy
 import csv
 import time
 import datetime
-from collections import Counter
-import math
 import os
 from multiprocessing import Pool
 from dataclasses import dataclass
+import cProfile
 
 
 @dataclass
@@ -27,6 +26,14 @@ def get_largest_prime_factor(n: int) -> int | None:
     return max(s)
 
 
+def has_prime_factor_greater_than(n: int, p1_candidate: int) -> bool:
+    factors = sorted(sympy.factorint(n).keys())
+    for factor in factors:
+        if factor > p1_candidate and sympy.isprime(factor):
+            return True
+    return False
+
+
 def check_p1(k: int, p1_candidate: int) -> tuple[bool, int | None]:
     """check if p1 is part of a valid pair, and if so return p2"""
     if not sympy.isprime(p1_candidate):
@@ -35,10 +42,10 @@ def check_p1(k: int, p1_candidate: int) -> tuple[bool, int | None]:
     if p2_candidate is None or p2_candidate <= p1_candidate:
         return False, None
     square_and_k = p2_candidate ** 2 + k
-    if square_and_k % p1_candidate != 0:
+    quotient, remainder = divmod(square_and_k, p1_candidate)
+    if remainder != 0:
         return False, None
-    t = get_largest_prime_factor(square_and_k)
-    if t == p1_candidate:
+    if not has_prime_factor_greater_than(quotient, p1_candidate):
         return True, p2_candidate
     return False, None
 
@@ -92,10 +99,10 @@ def main(settings: Settings):
 
 if __name__ == "__main__":
     settings = Settings(
-        start_k=10,
-        stop_k=11,
+        start_k=1,
+        stop_k=2,
         search_start=1,
-        search_stop=10_000_000,
+        search_stop=1_000_000,
         processes=9,
         print_mode=False
     )

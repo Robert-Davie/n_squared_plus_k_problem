@@ -1,5 +1,15 @@
-from src.n_2_plus_k.main import get_largest_prime_factor, split_search_between_processes, check_p1, Settings, get_negative_even_squares_up_to
+from src.n_2_plus_k.main import get_largest_prime_factor, split_search_between_processes, check_p1, Settings, get_negative_even_squares_up_to, has_prime_factor_greater_than
 import pytest
+
+
+@pytest.mark.parametrize("n, p1_candidate, expected_result", [
+    (12, 5, False), # 3
+    (34, 16, True), # 17
+    (101, 100, True),
+    (0, 1, False),
+])
+def test_has_prime_factor_greater_than(n, p1_candidate, expected_result):
+    assert has_prime_factor_greater_than(n, p1_candidate) == expected_result
 
 
 @pytest.mark.parametrize("input_value, expected_result", [
